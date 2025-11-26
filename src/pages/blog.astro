@@ -1,14 +1,14 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro"
-const pageTittle = "Mi blog de Astro aprendizaje"
+import BlogPost from "../components/BlogPost.astro";
+const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true }));
+const pageTittle = "Mi blog de Astro aprendizaje";
 ---
 <BaseLayout pageTittle={pageTittle}>
     <p>Aquí es donde publicaré sobre mi viaje de aprendizaje Astro.</p>
 
     <ul class="post-list">
-        <li class="card"><a href="/posts/post-1/">Publicación 1</a></li>
-        <li class="card"><a href="/posts/post-2/">Publicación 2</a></li>
-        <li class="card"><a href="/posts/post-3/">Publicación 3</a></li>
+        {allPosts.map((post: any) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
     </ul> 
 </BaseLayout>  
 
